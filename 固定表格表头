@@ -1,0 +1,29 @@
+     //*隐藏左边菜单栏时重载页面内！*/ 
+        window.parent.document.getElementById("hide").onclick=function(){location.reload()}
+        /*实现表头冻结*/
+        $(function(){
+            $("#ss").html($("#xx").html());
+            //$("#myTable").css("left",$("#ssss").offset().left);
+            var t = $("#xx .maintable").width();
+            $("#ss .maintable").width(t);
+            $("#xx .maintable").width(t);
+            $("#ss").height($("#xx .maintable tr:eq(0) th:eq(0)").height()); 
+            $("#xx").css("margin-top",-$("#ss").height());
+        })
+        /*修改的选中行置于顶部*/
+        $(function (){
+            $("#xx .maintable tbody").find("tr").click(function(){ 
+                var dtr = $('#xx').scrollTop();
+                var dataId = $(this).attr('data-id');
+                localStorage.dataId =dataId;//将点击的tr的data-id的值存贮在localStorage中！
+                localStorage.datatop =dtr;
+                $(this).css({'background':'#b9edff'}).siblings().css({'background':'#fff'});
+            });
+        });
+        $(document).ready(function(){
+            var srot = localStorage.dataId;
+            var dtr = localStorage.datatop;
+            console.log('test');
+            $("#xx").animate({scrollTop: dtr},700);
+            $("#xx .maintable tbody").find("tr[data-id="+srot+"]").css({"background":"#b9edff"});
+        });
